@@ -2,7 +2,7 @@ package com.chess.engine.board;
 
 import java.util.ArrayList;
 
-public class BoardUtil {
+public class BoardUtils {
 
     public static final boolean[] FIRST_COLUMN = initColumn(0);
     public static final boolean[] SECOND_COLUMN = initColumn(1);
@@ -12,7 +12,7 @@ public class BoardUtil {
     public static final int NUM_TILES = 64;
     public static final int NUM_TILES_PER_ROW = 8;
 
-    private BoardUtil(){
+    private BoardUtils(){
         throw new RuntimeException("You can not instantiate me");
     }
 
