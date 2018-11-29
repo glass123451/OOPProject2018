@@ -25,14 +25,14 @@ public final class Table extends Observable {
     private final MoveLog moveLog;
     private Board chessBoard;
     private Piece sourceTile;
-    private Piece humanMovedPiece;
+    private Piece MovedPiece;
     private BoardDirection boardDirection;
     private String pieceIconPath;
     private Color lightTileColor = Color.decode("#FFFFFF");
     private Color darkTileColor = Color.decode("#593E1A");
 
     private static final Dimension OUTER_FRAME_DIMENSION = new Dimension(600, 600);
-    private static final Dimension BOARD_PANEL_DIMENSION = new Dimension(400, 350);
+    private static final Dimension BOARD_PANEL_DIMENSION = new Dimension(400, 400);
     private static final Dimension TILE_PANEL_DIMENSION = new Dimension(10, 10);
 
     private static final Table INSTANCE = new Table();
@@ -279,12 +279,12 @@ public final class Table extends Observable {
                 public void mouseClicked(final MouseEvent event) {
                     if (isRightMouseButton(event)) {
                         sourceTile = null;
-                        humanMovedPiece = null;
+                        MovedPiece = null;
                     } else if (isLeftMouseButton(event)) {
                         if (sourceTile == null) {
                             sourceTile = chessBoard.getPiece(tileId);
-                            humanMovedPiece = sourceTile;
-                            if (humanMovedPiece == null) {
+                            MovedPiece = sourceTile;
+                            if (MovedPiece == null) {
                                 sourceTile = null;
                             }
                         } else {
@@ -296,7 +296,7 @@ public final class Table extends Observable {
                                 moveLog.addMove(move);
                             }
                             sourceTile = null;
-                            humanMovedPiece = null;
+                            MovedPiece = null;
                         }
                     }
                     invokeLater(new Runnable() {
@@ -338,9 +338,9 @@ public final class Table extends Observable {
         }
 
         private void highlightTileBorder(final Board board) {
-            if(humanMovedPiece != null &&
-                    humanMovedPiece.getPieceAllegiance() == board.currentPlayer().getAlliance() &&
-                    humanMovedPiece.getPiecePosition() == this.tileId) {
+            if(MovedPiece != null &&
+                    MovedPiece.getPieceAllegiance() == board.currentPlayer().getAlliance() &&
+                    MovedPiece.getPiecePosition() == this.tileId) {
                 setBorder(BorderFactory.createLineBorder(Color.cyan));
             } else {
                 setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -367,12 +367,12 @@ public final class Table extends Observable {
                     BoardUtils.INSTANCE.THIRD_ROW.get(this.tileId) ||
                     BoardUtils.INSTANCE.FIFTH_ROW.get(this.tileId) ||
                     BoardUtils.INSTANCE.SEVENTH_ROW.get(this.tileId)) {
-                setBackground(this.tileId % 2 == 0 ? lightTileColor : darkTileColor);
+                setBackground(this.tileId % 2 == 0 ? darkTileColor : lightTileColor);
             } else if(BoardUtils.INSTANCE.SECOND_ROW.get(this.tileId) ||
                     BoardUtils.INSTANCE.FOURTH_ROW.get(this.tileId) ||
                     BoardUtils.INSTANCE.SIXTH_ROW.get(this.tileId)  ||
                     BoardUtils.INSTANCE.EIGHTH_ROW.get(this.tileId)) {
-                setBackground(this.tileId % 2 != 0 ? lightTileColor : darkTileColor);
+                setBackground(this.tileId % 2 != 0 ? darkTileColor : lightTileColor);
             }
         }
     }
